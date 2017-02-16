@@ -21,13 +21,22 @@ annotedDescriptors = []
 for img in listDir: 
     
     im=cv2.imread(dataDir+ "/" +img)
-    k, des = extract_surf(im)
+    
+    surf = cv2.SURF(0)
+    dense=cv2.FeatureDetector_create("Dense")
+    dense.setInt('initXyStep', 5 )  
+    #dense=cv2.DenseFeatureDetector()
+    imgGray=cv2.cvtColor(im, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+    kp=dense.detect(imgGray)
+    #k, des = extract_surf(gray)
+    k,des=surf.compute(imgGray,kp)
+
+    
+    
     with open(filedir +"/" + img.replace("png","txt"), "r") as f:
         line =  f.readlines()[-2]
         numbers =  map(int, (re.findall(r'\d+', line)))
         numbers.pop(0)
         
-        t = (des, numbers)
+        t = (k, des, numbers)
         annotedDescriptors.append(t)
-
-        pickle.dump(annotedDescriptors, open("annotedDescriptors.pkl", "wb"))
