@@ -40,5 +40,5 @@ for image_path, descriptor in des_list[1:]:
 
 # do a kmeans clustering and save
 k = 5000
-codebook, variance = kmeans(descriptors, k, iter=1) 
+codebook, variance = kmeans(descriptors, k, iter=10) 
 pickle.dump(codebook, open("centroids.pkl", "wb"))
