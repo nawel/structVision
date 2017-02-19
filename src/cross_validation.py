@@ -56,9 +56,9 @@ for (train, test), n in zip(kf.split(X), range(n_folds)):
                 f_gtbox.write('\n')
                 
 with open('run_script.s','w') as script:
-  script.write('#!/bin/bash')
-  for c in [1, 0.1, 0.01, 0.001]:
-    for i in range(5):
-        print "./svm-python-v204/svm_python_learn --m subwindow -c %.3f gtbox/train_%d.gtbox output/car_%d_%.3f.model" % (c, i,i,c)
-        print "./svm-python-v204/svm_python_classify --m subwindow gtbox/test_%d.gtbox output/car_%d_%.3f.model output/output_%d_%.3f.txt"  % (i, i, c, i,c)
+    script.write('#!/bin/bash')
+    for c in [1, 0.1, 0.01, 0.001]:
+        for i in range(5):
+            script.write("./svm-python-v204/svm_python_learn --m subwindow -c %.3f gtbox/train_%d.gtbox output/car_%d_%.3f.model" % (c, i,i,c))
+            script.write("./svm-python-v204/svm_python_classify --m subwindow gtbox/test_%d.gtbox output/car_%d_%.3f.model output/output_%d_%.3f.txt"  % (i, i, c, i,c))
 
